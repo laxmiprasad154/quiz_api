@@ -45,42 +45,44 @@ namespace quizapi.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<QuestionDTO>>> GetAll()
         {
-            var QuestionEntity = await questionListingRepo.GetAllAsync();
+            var questionentity = await questionListingRepo.GetAllAsync();
 
-            return Ok(mapper.Map<List<QuestionDTO>>(QuestionEntity));
+            return Ok(mapper.Map<List<QuestionDTO>>(questionentity));
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        
+        
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var questionn = await questionListingRepo.GetByIdAsync(id);
-            if (questionn == null)
+            var questionentity = await questionListingRepo.GetByIdAsync(id);
+            if (questionentity == null)
             {
                 return NotFound();
             }
 
-            return Ok(mapper.Map<QuestionDTO>(questionn));
+            return Ok(mapper.Map<QuestionDTO>(questionentity));
 
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("{id}")]
         [Authorize(Roles = "Admin")]
         
         public async Task<IActionResult> Update([FromRoute] int id, UpdateQuestionDTO updateQuestionDTO)
         {
-            var questionnn = mapper.Map<Question>(updateQuestionDTO);
-            questionnn = await questionListingRepo.UpdateAsync(id, questionnn);
-            if (questionnn == null)
+            var questionentity = mapper.Map<Question>(updateQuestionDTO);
+            questionentity = await questionListingRepo.UpdateAsync(id, questionentity);
+            if (questionentity == null)
             {
                 return BadRequest();
             }
 
-            return Ok(mapper.Map<QuestionDTO>(questionnn));
+            return Ok(mapper.Map<QuestionDTO>(questionentity));
         }
 
         [HttpDelete]
-
+        [Route("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

@@ -8,20 +8,9 @@ using quizapi.Data_Access_Layer.Repository.Interface;
 using quizapi.Infrastructure;
 using System.Text;
 using Swashbuckle.AspNetCore.Filters;
-using quizapi.Infrastructure.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-
-
-
-
 
 
 builder.Services.AddDbContext<quizdbcontext>(options =>
@@ -36,6 +25,8 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+
 }).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -61,13 +52,13 @@ builder.Services.AddAuthorization(options =>
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
         Description = "Standard Authorization header using the Bearer scheme(\"bearer {token}\")",
         In = ParameterLocation.Header,
@@ -88,7 +79,6 @@ if (app.Environment.IsDevelopment())
 
 
 
-//app.UseMiddleware<ExceptionHandler>();
 
 app.UseHttpsRedirection();
 

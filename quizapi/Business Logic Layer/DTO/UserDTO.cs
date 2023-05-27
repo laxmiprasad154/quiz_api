@@ -33,6 +33,6 @@ namespace quizapi.Business_Logic_Layer.DTO
 
 
 
-        public int UserRoleId { get; set; }
+        public UserRoleDTO UserRole { get; set; }
     }
 }

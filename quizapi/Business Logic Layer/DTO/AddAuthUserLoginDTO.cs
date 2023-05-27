@@ -10,10 +10,10 @@ namespace quizapi.Business_Logic_Layer.DTO
     {
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
-        public string Email { get; set; }
+        public string UserEmail { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [StringLength(60, ErrorMessage = "Password must be between 6 and 50 characters.", MinimumLength = 6)]
-        public string Password { get; set; }
+        public string UserPassword { get; set; }
     }
 }

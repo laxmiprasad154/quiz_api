@@ -1,19 +1,12 @@
 ﻿using AutoMapper;
 using IdentityModel;
-
-
 using Microsoft.AspNetCore.Mvc;
 using quizapi.Business_Logic_Layer.DTO;
 using quizapi.Data_Access_Layer.Entities;
 using quizapi.Data_Access_Layer.Repository.Interface;
 using quizapi.Infrastructure;
 using System.Security.Claims;
-
-
-
-
 using Microsoft.EntityFrameworkCore;
-
 using quizapi.Data_Access_Layer.context;
 
 namespace quizapi.Controllers
@@ -28,6 +21,7 @@ namespace quizapi.Controllers
         private readonly IConfiguration configuration;
         private readonly IMapper mapper;
         private readonly IUserRepo userRepo;
+  
 
         public AuthController(quizdbcontext context, IConfiguration configuration, IMapper mapper, IUserRepo userRepo)
         {
@@ -35,20 +29,20 @@ namespace quizapi.Controllers
             this.configuration = configuration;
             this.mapper = mapper;
             this.userRepo = userRepo;
-
+            
         }
         [Route("login")]
         [HttpPost]
         public IActionResult Login(AddAuthUserLoginDTO loginModel)
         {
 
-            var user = context.Users.Include(x => x.UserRole).SingleOrDefault(x => x.Email == loginModel.Email);
+           var user = context.Users.Include(x => x.UserRole).FirstOrDefault(x => x.Email == loginModel.UserEmail);
 
-            if (user is null)
+            if (user == null)
                 return Unauthorized("Invalid Username or Password!");
 
-            string hashedPassword = HashPassword(loginModel.Password);
-            if (BCrypt.Net.BCrypt.Verify(loginModel.Password, user.Password))
+            string hashedPassword = HashPassword(loginModel.UserPassword);
+            if (BCrypt.Net.BCrypt.Verify(loginModel.UserPassword, hashedPassword))
             {
 
                 var token = JWT.GenerateToken(new Dictionary<string, string> {

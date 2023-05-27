@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using quizapi.Data_Access_Layer.Entities;
+
 
 namespace quizapi.Business_Logic_Layer.DTO
 {

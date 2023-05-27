@@ -17,7 +17,7 @@ namespace quizapi.Controllers
         private readonly IUserRepo userRepo;
         
 
-        public UserController(IMapper mapper, IUserRepo userRepo, IQuestionListingRepo QuestionRepo)
+        public UserController(IMapper mapper, IUserRepo userRepo)
         {
             this.mapper = mapper;
             this.userRepo = userRepo;
@@ -41,7 +41,7 @@ namespace quizapi.Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}/admin")]
+        [Route("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
@@ -56,7 +56,7 @@ namespace quizapi.Controllers
         }
 
         [HttpPut]
-        [Route("{id:int}")]
+        [Route("{id}")]
 
 
         public async Task<IActionResult> Update([FromRoute] int id, UpdateUserRequestDTO updateUserRequestDTO)
@@ -71,7 +71,7 @@ namespace quizapi.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:int}/admin")]
+        [Route("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
