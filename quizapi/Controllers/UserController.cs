@@ -31,7 +31,7 @@ namespace quizapi.Controllers
         //GET Walks        //GET:/api/walks       
         [HttpGet]
         [Route("admin")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Participant")]
         
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll()
         {
@@ -42,7 +42,7 @@ namespace quizapi.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Participant")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var userEntity = await userRepo.GetByIdAsync(id);
