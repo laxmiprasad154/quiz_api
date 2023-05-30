@@ -20,7 +20,7 @@ namespace quizapi.Infrastructure
             CreateMap<AddQuestionRequestDTO, Question>().ReverseMap();
             CreateMap<Question, QuestionDTO>().ReverseMap();
             CreateMap<UpdateQuestionDTO, Question>().ReverseMap();
-            
+            CreateMap<UserQuestionsDTO,Question>().ReverseMap();
         }
     }
 }

@@ -57,7 +57,7 @@ namespace quizapi.Controllers
 
         [HttpPut]
         [Route("{id}")]
-
+        [Authorize(Roles ="Admin,Participant")]
 
         public async Task<IActionResult> Update([FromRoute] int id, UpdateUserRequestDTO updateUserRequestDTO)
         {

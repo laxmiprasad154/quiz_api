@@ -42,7 +42,7 @@ namespace quizapi.Controllers
 
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<QuestionDTO>>> GetAll()
         {
             var questionentity = await questionListingRepo.GetAllAsync();
@@ -50,8 +50,16 @@ namespace quizapi.Controllers
             return Ok(mapper.Map<List<QuestionDTO>>(questionentity));
         }
 
+        [HttpGet("Participant")]
+        [Authorize(Roles = "Participant")]
+        public async Task<ActionResult<IEnumerable<UserQuestionsDTO>>> GetQuestions()
+        {
+            var questionentity = await questionListingRepo.GetAllAsync();
+
+            return Ok(mapper.Map<List<UserQuestionsDTO>>(questionentity));
+        }
         [HttpGet("{id}")]
-        
+        [Authorize(Roles ="Admin")]
         
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
