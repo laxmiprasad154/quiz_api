@@ -34,7 +34,7 @@ namespace quizapi.Business_Logic_Layer.DTO
         public int TimeTaken { get; set; }
 
 
-
+        [Required]
         public UserRoleDTO UserRole { get; set; }
     }
 }

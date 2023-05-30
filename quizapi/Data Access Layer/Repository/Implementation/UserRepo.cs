@@ -55,23 +55,29 @@ namespace quizapi.Data_Access_Layer.Repository.Implementation
 
         public async Task<User> UpdateAsync(int id, User user)
         {
-            var existingUser = await dbContext.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            var existingUser = await dbContext.Users.Include(o => o.UserRole).FirstOrDefaultAsync(x => x.UserId == id);
             if (existingUser == null)
             {
                 return null;
             }
             existingUser.UserName = user.UserName;
-            existingUser.Email = user.Email;
-            existingUser.Password = user.Password;
+            existingUser.Email = user.Email; 
             existingUser.FName = user.FName;
             existingUser.LName = user.LName;
             existingUser.Score = user.Score;
             existingUser.TimeTaken = user.TimeTaken;
             existingUser.UserRoleId = user.UserRoleId;
+            existingUser.Password = HashPassword(user.Password);
            
 
             await dbContext.SaveChangesAsync();
             return existingUser;
+        }
+
+        private string HashPassword(string password)
+        {
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            return hashedPassword;
         }
     }
 }
